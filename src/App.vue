@@ -1,54 +1,65 @@
 <template>
-  <div id="app">
-    <div v-if="!status">
-      <button
-        type="button"
-        uk-toggle="target: #login"
-        v-text="'Login'"
-      />
-    </div>
-    <div v-else>
-      <button
-        type="button"
-        @click="logout()"
-        v-text="'Logout'"
-      />
-    </div>
-    <router-view/>
+	<div id="app">
+		<div v-if="!status">
+			<button
+				type="button"
+				uk-toggle="target: #login"
+				v-text="'Login'"
+			/>
+		</div>
+		<div v-else>
+			<button
+				type="button"
+				@click="logout()"
+				v-text="'Logout'"
+			/>
+		</div>
+		<router-view/>
 
-    <div id="login" uk-modal>
-        <div class="uk-modal-dialog uk-modal-body">
-            <h2 class="uk-modal-title">Login</h2>
-            <div>
-              <login />
-            </div>
-            <p class="uk-text-right">
-                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-                <button class="uk-button uk-button-secondary" type="button">Forgot password?</button>
-                <button class="uk-button uk-button-primary" type="button">Registration</button>
-            </p>
-        </div>
-    </div>
-  </div>
+		<div id="login" uk-modal>
+				<div class="uk-modal-dialog uk-modal-body">
+
+					<ul uk-tab>
+						<li class="uk-active login-modal-tabs"><a href="#">log in</a></li>
+						<li><a href="#">new account</a></li>
+						<li><a href="#">recovery</a></li>
+					</ul>
+					<ul id="my-id" class="uk-switcher uk-margin">
+						<li>
+							<login/> <!--is realy wrap necessary?-->
+						</li>
+						<li>
+							<singup/>
+						</li>
+						<li>
+							<recovery/>
+						</li>
+					</ul>
+				</div>
+		</div>
+	</div>
 </template>
 
 <script>
 import Login from '@/components/Login';
+import Singup from '@/components/Singup';
+import Recovery from '@/components/Recovery';
 
 export default {
-  computed: {
-    status() {
-      return this.$store.state.user.status;
-    },
-  },
-  components: {
-    Login
-  },
-  methods: {
-    logout() {
-      this.$store.commit('login');
-      this.$router.push('/');
-    }
-  }
+	computed: {
+		status() {
+			return this.$store.state.user.status;
+		},
+	},
+	components: {
+		Login, Singup, Recovery
+	},
+	methods: {
+		logout() {
+			this.$store.commit('login');
+			this.$router.push('/');
+		}
+	}
 }
+
 </script>
